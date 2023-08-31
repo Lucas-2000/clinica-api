@@ -17,13 +17,15 @@ import java.util.Date;
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String id;
 
     @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
+    private Date appointment_datetime;
+
     private Date appointment_initial_datetime;
 
     private Date appointment_finish_datetime;

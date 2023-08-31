@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String id;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 30, unique = true)
     private String username;
 
     @Column(nullable = false, length = 30)
@@ -27,9 +27,9 @@ public class User {
     @Column(nullable = false)
     private UserRole role;
 
-    @OneToOne(mappedBy = "users")
+    @OneToOne(mappedBy = "user")
     private Doctor doctor;
 
-    @OneToOne(mappedBy = "users")
+    @OneToOne(mappedBy = "user")
     private Attendant attendant;
 }

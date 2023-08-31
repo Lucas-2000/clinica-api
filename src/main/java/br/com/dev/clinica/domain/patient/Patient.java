@@ -17,7 +17,7 @@ import java.util.List;
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String id;
 
     @Column(nullable = false, unique = true)
@@ -56,6 +56,6 @@ public class Patient {
     @Column(nullable = false, length = 50)
     private String health_insurance_code;
 
-    @OneToMany(mappedBy = "patients")
+    @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
 }

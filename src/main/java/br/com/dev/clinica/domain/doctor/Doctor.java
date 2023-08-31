@@ -58,12 +58,12 @@ public class Doctor {
     private String[] specialties;
 
     @Column(nullable = false)
-    private boolean isActive;
+    private boolean is_active;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "doctors")
+    @OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments;
 }

@@ -50,7 +50,7 @@ public class Attendant {
     private String email;
 
     @Column(nullable = false)
-    private boolean isActive;
+    private boolean is_active;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
