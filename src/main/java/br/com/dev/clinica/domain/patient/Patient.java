@@ -18,6 +18,9 @@ public class Patient {
     @Column(nullable = false)
     private String id;
 
+    @Column(nullable = false, unique = true)
+    private String cpf;
+
     @Column(nullable = false, length = 30)
     private String first_name;
 
