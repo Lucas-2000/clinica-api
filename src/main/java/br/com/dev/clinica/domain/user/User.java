@@ -1,5 +1,6 @@
 package br.com.dev.clinica.domain.user;
 
+import br.com.dev.clinica.domain.attendant.Attendant;
 import br.com.dev.clinica.domain.doctor.Doctor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,4 +29,7 @@ public class User {
 
     @OneToOne(mappedBy = "users")
     private Doctor doctor;
+
+    @OneToOne(mappedBy = "users")
+    private Attendant attendant;
 }
