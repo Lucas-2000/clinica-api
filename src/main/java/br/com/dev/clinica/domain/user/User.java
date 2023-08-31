@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,8 +17,8 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false, unique = true)
-    private String id;
+    @Column(nullable = false, unique = true, columnDefinition = "uuid")
+    private UUID id;
 
     @Column(nullable = false, length = 30, unique = true)
     private String username;
@@ -32,4 +34,10 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Attendant attendant;
+
+    public User(UserRequestDTO data) {
+        this.username = data.username();
+        this.password = data.password();
+        this.role = data.role();
+    }
 }
