@@ -1,6 +1,7 @@
 package br.com.dev.clinica.domain.doctor;
 
 import br.com.dev.clinica.domain.appointment.Appointment;
+import br.com.dev.clinica.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -58,6 +59,10 @@ public class Doctor {
 
     @Column(nullable = false)
     private boolean isActive;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @OneToMany(mappedBy = "doctors")
     private List<Appointment> appointments;
