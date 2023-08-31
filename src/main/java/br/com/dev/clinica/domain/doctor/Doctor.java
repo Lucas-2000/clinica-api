@@ -1,11 +1,13 @@
 package br.com.dev.clinica.domain.doctor;
 
+import br.com.dev.clinica.domain.appointment.Appointment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -56,4 +58,7 @@ public class Doctor {
 
     @Column(nullable = false)
     private boolean isActive;
+
+    @OneToMany(mappedBy = "doctors")
+    private List<Appointment> appointments;
 }
