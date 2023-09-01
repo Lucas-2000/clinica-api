@@ -46,10 +46,17 @@ public class User implements UserDetails {
         this.role = data.role();
     }
 
+    public User(UserResponseDTO data) {
+        this.id = data.id();
+        this.username = data.username();
+        this.password = data.password();
+        this.role = data.role();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_ATTENDANT"), new SimpleGrantedAuthority("ROLE_DOCTOR"));
+        else return List.of( new SimpleGrantedAuthority("ROLE_ATTENDANT"), new SimpleGrantedAuthority("ROLE_DOCTOR"));
     }
 
     @Override

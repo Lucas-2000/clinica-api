@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -17,16 +18,16 @@ public class Attendant {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false)
-    private String id;
+    private UUID id;
 
     @Column(nullable = false, unique = true)
     private String cpf;
 
     @Column(nullable = false, length = 30)
-    private String first_name;
+    private String firstName;
 
     @Column(nullable = false, length = 50)
-    private String last_name;
+    private String lastName;
 
     @Column(nullable = false)
     private Date birthdate;
@@ -50,9 +51,23 @@ public class Attendant {
     private String email;
 
     @Column(nullable = false)
-    private boolean is_active;
+    private boolean isActive;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public Attendant(AttendantRequestDTO data) {
+        this.cpf = data.cpf();
+        this.firstName = data.firstName();
+        this.lastName = data.lastName();
+        this.birthdate = data.birthdate();
+        this.street = data.street();
+        this.number = data.number();
+        this.city = data.city();
+        this.uf = data.uf();
+        this.cellphone = data.cellphone();
+        this.email = data.email();
+        this.isActive = data.isActive();
+    }
 }

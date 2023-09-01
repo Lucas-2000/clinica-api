@@ -2,7 +2,8 @@ package br.com.dev.clinica.domain.user;
 
 public enum UserRole {
     ADMIN("admin"),
-    USER("user");
+    ATTENDANT("attendant"),
+    DOCTOR("doctor");
 
     private String role;
 
