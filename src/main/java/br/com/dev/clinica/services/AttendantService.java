@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static br.com.dev.clinica.utils.string.UtilsString.generateRandomPassword;
@@ -80,21 +81,17 @@ public class AttendantService {
     public List<AttendantResponseDTO> findAll() {
         return attendantRepository.findAll().stream().map(attendant -> {
             try {
-                return findUserInfo(attendant);
+                return buildAttendantInfo(attendant);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }).collect(Collectors.toList());
     }
 
-    private AttendantResponseDTO findUserInfo(Attendant attendant) throws Exception {
+    private AttendantResponseDTO buildAttendantInfo(Attendant attendant) throws Exception {
         var userId = attendant.getUser().getId();
 
-        Optional<User> user = userRepository.findById(userId);
-
-        if (!user.isPresent()) throw new Exception();
-
-        UserResponseDTO userResponseDTO = new UserResponseDTO(user.get().getId(), user.get().getUsername(), user.get().getPassword(), user.get().getRole());
+        UserResponseDTO userResponseDTO = findUserInfo(userId);
 
         return new AttendantResponseDTO(
                 attendant.getId(),
@@ -111,6 +108,43 @@ public class AttendantService {
                 attendant.isActive(),
                 userResponseDTO
         );
+    }
+
+    private UserResponseDTO findUserInfo(UUID userId) throws Exception {
+        Optional<User> user = userRepository.findById(userId);
+
+        if (!user.isPresent()) throw new Exception();
+
+        UserResponseDTO userResponseDTO = new UserResponseDTO(user.get().getId(), user.get().getUsername(), user.get().getPassword(), user.get().getRole());
+
+        return userResponseDTO;
+    }
+
+
+    public AttendantResponseDTO findById(UUID id) throws Exception {
+        Optional<Attendant> attendant = attendantRepository.findById(id);
+
+        if(!attendant.isPresent()) throw new Exception();
+
+        UserResponseDTO userResponseDTO = findUserInfo(attendant.get().getUser().getId());
+
+        AttendantResponseDTO attendantResponseDTO = new AttendantResponseDTO(
+                attendant.get().getId(),
+                attendant.get().getCpf(),
+                attendant.get().getFirstName(),
+                attendant.get().getLastName(),
+                attendant.get().getBirthdate(),
+                attendant.get().getStreet(),
+                attendant.get().getNumber(),
+                attendant.get().getCity(),
+                attendant.get().getUf(),
+                attendant.get().getCellphone(),
+                attendant.get().getEmail(),
+                attendant.get().isActive(),
+                userResponseDTO
+        );
+
+        return attendantResponseDTO;
     }
 
 }

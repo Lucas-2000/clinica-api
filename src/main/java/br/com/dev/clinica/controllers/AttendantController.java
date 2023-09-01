@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/attendants")
@@ -18,9 +19,12 @@ public class AttendantController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<AttendantRequestDTO> create (@RequestBody AttendantRequestDTO data) {
-        attendantService.create(data);
-
-        return ResponseEntity.ok(data);
+        try {
+            attendantService.create(data);
+            return ResponseEntity.ok(data);
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -29,4 +33,13 @@ public class AttendantController {
         return ResponseEntity.ok(attendantService.findAll());
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("{id}")
+    public ResponseEntity<AttendantResponseDTO> findById(@PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok(attendantService.findById(id));
+        } catch (Exception ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
