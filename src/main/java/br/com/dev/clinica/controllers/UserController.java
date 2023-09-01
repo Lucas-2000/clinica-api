@@ -7,6 +7,7 @@ import br.com.dev.clinica.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,13 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserRequestDTO> create(@RequestBody UserRequestDTO data) {
         User user = new User(data);
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        String password = passwordEncoder.encode(data.password());
+
+        user.setPassword(password);
+
         userRepository.save(user);
         return new ResponseEntity<>(data, HttpStatus.CREATED);
     }
@@ -54,8 +62,12 @@ public class UserController {
         if(user.isPresent()) {
             User newUser = user.get();
 
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+            String password = passwordEncoder.encode(data.password());
+
             newUser.setUsername(data.username());
-            newUser.setPassword(data.password());
+            newUser.setPassword(password);
             newUser.setRole(data.role());
 
             userRepository.save(newUser);
