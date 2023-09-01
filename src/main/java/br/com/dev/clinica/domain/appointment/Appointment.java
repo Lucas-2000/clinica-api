@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +19,7 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false, unique = true)
-    private String id;
+    private UUID id;
 
     @Column(nullable = false)
     private String description;

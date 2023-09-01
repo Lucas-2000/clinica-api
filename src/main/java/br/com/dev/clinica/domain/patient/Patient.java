@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +19,7 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false, unique = true)
-    private String id;
+    private UUID id;
 
     @Column(nullable = false, unique = true)
     private String cpf;
