@@ -113,7 +113,7 @@ public class AttendantService {
     private UserResponseDTO findUserInfo(UUID userId) throws Exception {
         Optional<User> user = userRepository.findById(userId);
 
-        if (!user.isPresent()) throw new Exception();
+        if (!user.isPresent()) throw new Exception("User not found");
 
         UserResponseDTO userResponseDTO = new UserResponseDTO(user.get().getId(), user.get().getUsername(), user.get().getPassword(), user.get().getRole());
 
@@ -124,7 +124,7 @@ public class AttendantService {
     public AttendantResponseDTO findById(UUID id) throws Exception {
         Optional<Attendant> attendant = attendantRepository.findById(id);
 
-        if(!attendant.isPresent()) throw new Exception();
+        if(!attendant.isPresent()) throw new Exception("Attendant not found");
 
         UserResponseDTO userResponseDTO = findUserInfo(attendant.get().getUser().getId());
 
@@ -147,4 +147,27 @@ public class AttendantService {
         return attendantResponseDTO;
     }
 
+    public AttendantRequestDTO update(UUID id, AttendantRequestDTO data) throws Exception {
+        Optional<Attendant> attendant = attendantRepository.findById(id);
+
+        if(!attendant.isPresent()) throw new Exception("Attendant not found");
+
+        Attendant existingAttendant = attendant.get();
+
+        existingAttendant.setCpf(data.cpf());
+        existingAttendant.setFirstName(data.firstName());
+        existingAttendant.setLastName(data.lastName());
+        existingAttendant.setBirthdate(data.birthdate());
+        existingAttendant.setStreet(data.street());
+        existingAttendant.setNumber(data.number());
+        existingAttendant.setCity(data.city());
+        existingAttendant.setUf(data.uf());
+        existingAttendant.setCellphone(data.cellphone());
+        existingAttendant.setEmail(data.email());
+        existingAttendant.setActive(data.isActive());
+
+        attendantRepository.save(existingAttendant);
+
+        return data;
+    }
 }

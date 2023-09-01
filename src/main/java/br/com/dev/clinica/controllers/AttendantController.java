@@ -42,4 +42,14 @@ public class AttendantController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("{id}")
+    public ResponseEntity<AttendantRequestDTO> update(@PathVariable UUID id, @RequestBody AttendantRequestDTO data) {
+        try {
+            return ResponseEntity.ok(attendantService.update(id, data));
+        } catch (Exception ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

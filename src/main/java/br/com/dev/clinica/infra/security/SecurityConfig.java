@@ -38,6 +38,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/users/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/attendants").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/attendants/**").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/attendants/**").permitAll()
+                                .requestMatchers(HttpMethod.DELETE, "/attendants/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .build();
