@@ -29,10 +29,10 @@ public class Doctor {
     private String crm;
 
     @Column(nullable = false, length = 30)
-    private String first_name;
+    private String firstName;
 
     @Column(nullable = false, length = 50)
-    private String last_name;
+    private String lastName;
 
     @Column(nullable = false)
     private Date birthdate;
@@ -59,7 +59,7 @@ public class Doctor {
     private String[] specialties;
 
     @Column(nullable = false)
-    private boolean is_active;
+    private boolean isActive;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -67,4 +67,20 @@ public class Doctor {
 
     @OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments;
+
+    public Doctor(DoctorRequestDTO data) {
+        this.cpf = data.cpf();
+        this.crm = data.crm();
+        this.firstName = data.firstName();
+        this.lastName = data.lastName();
+        this.birthdate = data.birthdate();
+        this.street = data.street();
+        this.number = data.number();
+        this.city = data.city();
+        this.uf = data.uf();
+        this.cellphone = data.cellphone();
+        this.email = data.email();
+        this.specialties = data.specialties();
+        this.isActive = data.isActive();
+    }
 }
