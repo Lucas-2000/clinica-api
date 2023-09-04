@@ -170,4 +170,16 @@ public class AttendantService {
 
         return data;
     }
+
+    public void delete(UUID id) throws Exception {
+        Optional<Attendant> attendant = attendantRepository.findById(id);
+
+        if(!attendant.isPresent()) throw new Exception("Attendant not found");
+
+        Attendant existingAttendant = attendant.get();
+
+        attendantRepository.delete(existingAttendant);
+
+        userRepository.delete(existingAttendant.getUser());
+    }
 }

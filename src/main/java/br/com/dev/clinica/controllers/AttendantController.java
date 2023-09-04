@@ -52,4 +52,15 @@ public class AttendantController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
+        try {
+            attendantService.delete(id);
+            return ResponseEntity.ok("Attendant deleted successfully");
+        } catch (Exception ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
