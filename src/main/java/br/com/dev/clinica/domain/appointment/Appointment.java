@@ -25,11 +25,13 @@ public class Appointment {
     private String description;
 
     @Column(nullable = false)
-    private Date appointment_datetime;
+    private Date appointmentDatetime;
 
-    private Date appointment_initial_datetime;
+    private Date appointmentInitialDatetime;
 
-    private Date appointment_finish_datetime;
+    private Date appointmentFinishDatetime;
+
+    private ConsultType consultType;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
