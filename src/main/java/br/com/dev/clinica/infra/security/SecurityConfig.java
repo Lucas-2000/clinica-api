@@ -44,6 +44,10 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/doctors/**").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/doctors/**").permitAll()
                                 .requestMatchers(HttpMethod.DELETE, "/doctors/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/patients").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/patients/**").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/patients/**").permitAll()
+                                .requestMatchers(HttpMethod.DELETE, "/patients/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .build();
