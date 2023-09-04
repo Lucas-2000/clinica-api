@@ -85,7 +85,7 @@ public class UserController {
 
         if(user.isPresent()) {
             userRepository.deleteById(id);
-            return ResponseEntity.ok("Usuário deletado com sucesso!");
+            return ResponseEntity.ok("User deleted successfully");
         }
 
         return ResponseEntity.notFound().build();
