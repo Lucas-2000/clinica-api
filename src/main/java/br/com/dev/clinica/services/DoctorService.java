@@ -6,6 +6,7 @@ import br.com.dev.clinica.domain.doctor.DoctorResponseDTO;
 import br.com.dev.clinica.domain.user.User;
 import br.com.dev.clinica.domain.user.UserResponseDTO;
 import br.com.dev.clinica.domain.user.UserRole;
+import br.com.dev.clinica.infra.exceptions.NotFoundException;
 import br.com.dev.clinica.repositories.DoctorRepository;
 import br.com.dev.clinica.repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -115,7 +116,7 @@ public class DoctorService {
     private UserResponseDTO findUserInfo(UUID userId) throws Exception {
         Optional<User> user = userRepository.findById(userId);
 
-        if (!user.isPresent()) throw new Exception("User not found");
+        if (!user.isPresent()) throw new NotFoundException("User not found");
 
         return new UserResponseDTO(user.get().getId(), user.get().getUsername(), user.get().getPassword(), user.get().getRole());
     }
@@ -123,7 +124,7 @@ public class DoctorService {
     public DoctorResponseDTO findById(UUID id) throws Exception {
         Optional<Doctor> doctor = doctorRepository.findById(id);
 
-        if(!doctor.isPresent()) throw new Exception("Doctor not found");
+        if(!doctor.isPresent()) throw new NotFoundException("Doctor not found");
 
         UserResponseDTO userResponseDTO = findUserInfo(doctor.get().getUser().getId());
 
@@ -151,7 +152,7 @@ public class DoctorService {
     public DoctorRequestDTO update(UUID id, DoctorRequestDTO data) throws Exception {
         Optional<Doctor> doctor = doctorRepository.findById(id);
 
-        if(!doctor.isPresent()) throw new Exception("Doctor not found");
+        if(!doctor.isPresent()) throw new NotFoundException("Doctor not found");
 
         Doctor existingDoctor = doctor.get();
 
@@ -177,7 +178,7 @@ public class DoctorService {
     public void delete(UUID id) throws Exception {
         Optional<Doctor> doctor = doctorRepository.findById(id);
 
-        if(!doctor.isPresent()) throw new Exception("Doctor not found");
+        if(!doctor.isPresent()) throw new NotFoundException("Doctor not found");
 
         Doctor existingDoctor = doctor.get();
 

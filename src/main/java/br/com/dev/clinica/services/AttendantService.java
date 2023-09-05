@@ -6,6 +6,7 @@ import br.com.dev.clinica.domain.attendant.AttendantResponseDTO;
 import br.com.dev.clinica.domain.user.User;
 import br.com.dev.clinica.domain.user.UserResponseDTO;
 import br.com.dev.clinica.domain.user.UserRole;
+import br.com.dev.clinica.infra.exceptions.NotFoundException;
 import br.com.dev.clinica.repositories.AttendantRepository;
 import br.com.dev.clinica.repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -113,7 +114,7 @@ public class AttendantService {
     private UserResponseDTO findUserInfo(UUID userId) throws Exception {
         Optional<User> user = userRepository.findById(userId);
 
-        if (!user.isPresent()) throw new Exception("User not found");
+        if (!user.isPresent()) throw new NotFoundException("User not found");
 
         UserResponseDTO userResponseDTO = new UserResponseDTO(user.get().getId(), user.get().getUsername(), user.get().getPassword(), user.get().getRole());
 
@@ -124,7 +125,7 @@ public class AttendantService {
     public AttendantResponseDTO findById(UUID id) throws Exception {
         Optional<Attendant> attendant = attendantRepository.findById(id);
 
-        if(!attendant.isPresent()) throw new Exception("Attendant not found");
+        if(!attendant.isPresent()) throw new NotFoundException("Attendant not found");
 
         UserResponseDTO userResponseDTO = findUserInfo(attendant.get().getUser().getId());
 
@@ -150,7 +151,7 @@ public class AttendantService {
     public AttendantRequestDTO update(UUID id, AttendantRequestDTO data) throws Exception {
         Optional<Attendant> attendant = attendantRepository.findById(id);
 
-        if(!attendant.isPresent()) throw new Exception("Attendant not found");
+        if(!attendant.isPresent()) throw new NotFoundException("Attendant not found");
 
         Attendant existingAttendant = attendant.get();
 
@@ -174,7 +175,7 @@ public class AttendantService {
     public void delete(UUID id) throws Exception {
         Optional<Attendant> attendant = attendantRepository.findById(id);
 
-        if(!attendant.isPresent()) throw new Exception("Attendant not found");
+        if(!attendant.isPresent()) throw new NotFoundException("Attendant not found");
 
         Attendant existingAttendant = attendant.get();
 
