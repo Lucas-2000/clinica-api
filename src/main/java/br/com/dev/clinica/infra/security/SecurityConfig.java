@@ -48,6 +48,10 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/patients/**").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/patients/**").permitAll()
                                 .requestMatchers(HttpMethod.DELETE, "/patients/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/appointments").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/appointments/**").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/appointments/**").permitAll()
+                                .requestMatchers(HttpMethod.DELETE, "/appointments/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .build();

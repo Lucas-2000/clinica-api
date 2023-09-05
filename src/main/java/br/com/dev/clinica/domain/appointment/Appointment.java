@@ -21,7 +21,7 @@ public class Appointment {
     @Column(nullable = false, unique = true)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String description;
 
     @Column(nullable = false)
@@ -31,6 +31,7 @@ public class Appointment {
 
     private Date appointmentFinishDatetime;
 
+    @Column(nullable = false)
     private ConsultType consultType;
 
     @ManyToOne
@@ -43,5 +44,18 @@ public class Appointment {
 
     private Integer rating;
 
+    @Column(length = 500)
     private String review;
+
+    public Appointment(AppointmentRequestDTO data) {
+        this.description = data.description();
+        this.appointmentDatetime = data.appointmentDatetime();
+        this.appointmentInitialDatetime = data.appointmentInitialDatetime();
+        this.appointmentFinishDatetime = data.appointmentFinishDatetime();
+        this.consultType = data.consultType();
+        this.patient = data.patient();
+        this.doctor = data.doctor();
+        this.rating = data.rating();
+        this.review = data.review();
+    }
 }
