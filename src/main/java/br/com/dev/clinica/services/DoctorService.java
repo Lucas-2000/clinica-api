@@ -89,7 +89,7 @@ public class DoctorService {
         }).collect(Collectors.toList());
     }
 
-    private DoctorResponseDTO buildAttendantInfo(Doctor doctor) throws Exception {
+    private DoctorResponseDTO buildAttendantInfo(Doctor doctor) throws RuntimeException {
         var userId = doctor.getUser().getId();
 
         UserResponseDTO userResponseDTO = findUserInfo(userId);
@@ -113,7 +113,7 @@ public class DoctorService {
         );
     }
 
-    private UserResponseDTO findUserInfo(UUID userId) throws Exception {
+    private UserResponseDTO findUserInfo(UUID userId) throws RuntimeException {
         Optional<User> user = userRepository.findById(userId);
 
         if (!user.isPresent()) throw new NotFoundException("User not found");
@@ -121,7 +121,7 @@ public class DoctorService {
         return new UserResponseDTO(user.get().getId(), user.get().getUsername(), user.get().getPassword(), user.get().getRole());
     }
 
-    public DoctorResponseDTO findById(UUID id) throws Exception {
+    public DoctorResponseDTO findById(UUID id) throws RuntimeException {
         Optional<Doctor> doctor = doctorRepository.findById(id);
 
         if(!doctor.isPresent()) throw new NotFoundException("Doctor not found");
@@ -149,7 +149,7 @@ public class DoctorService {
         return doctorResponseDTO;
     }
 
-    public DoctorRequestDTO update(UUID id, DoctorRequestDTO data) throws Exception {
+    public DoctorRequestDTO update(UUID id, DoctorRequestDTO data) throws RuntimeException {
         Optional<Doctor> doctor = doctorRepository.findById(id);
 
         if(!doctor.isPresent()) throw new NotFoundException("Doctor not found");
@@ -175,7 +175,7 @@ public class DoctorService {
         return data;
     }
 
-    public void delete(UUID id) throws Exception {
+    public void delete(UUID id) throws RuntimeException {
         Optional<Doctor> doctor = doctorRepository.findById(id);
 
         if(!doctor.isPresent()) throw new NotFoundException("Doctor not found");

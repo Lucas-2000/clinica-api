@@ -2,11 +2,13 @@ package br.com.dev.clinica.domain.appointment;
 
 import br.com.dev.clinica.domain.doctor.Doctor;
 import br.com.dev.clinica.domain.patient.Patient;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,12 +26,16 @@ public class Appointment {
     @Column(nullable = false, length = 500)
     private String description;
 
+
     @Column(nullable = false)
-    private Date appointmentDatetime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Timestamp appointmentDatetime;
 
-    private Date appointmentInitialDatetime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Timestamp appointmentInitialDatetime;
 
-    private Date appointmentFinishDatetime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Timestamp appointmentFinishDatetime;
 
     @Column(nullable = false)
     private ConsultType consultType;

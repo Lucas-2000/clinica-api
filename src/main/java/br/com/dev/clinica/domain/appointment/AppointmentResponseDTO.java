@@ -3,15 +3,16 @@ package br.com.dev.clinica.domain.appointment;
 import br.com.dev.clinica.domain.doctor.Doctor;
 import br.com.dev.clinica.domain.patient.Patient;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
 public record AppointmentResponseDTO(
         UUID id,
         String description,
-        Date appointmentDatetime,
-        Date appointmentInitialDatetime,
-        Date appointmentFinishDatetime,
+        Timestamp appointmentDatetime,
+        Timestamp appointmentInitialDatetime,
+        Timestamp appointmentFinishDatetime,
         ConsultType consultType,
         UUID patientId,
         UUID doctorId,

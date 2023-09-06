@@ -20,12 +20,8 @@ public class DoctorController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<DoctorRequestDTO> create (@RequestBody DoctorRequestDTO data) {
-        try {
-            doctorService.create(data);
-            return ResponseEntity.ok(data);
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().build();
-        }
+        doctorService.create(data);
+        return ResponseEntity.ok(data);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -37,31 +33,19 @@ public class DoctorController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("{id}")
     public ResponseEntity<DoctorResponseDTO> findById (@PathVariable UUID id) {
-        try {
-            return ResponseEntity.ok(doctorService.findById(id));
-        } catch (Exception ex) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(doctorService.findById(id));
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("{id}")
     public ResponseEntity<DoctorRequestDTO> update (@PathVariable UUID id, @RequestBody DoctorRequestDTO data) {
-        try {
-            return ResponseEntity.ok(doctorService.update(id, data));
-        } catch (Exception ex) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(doctorService.update(id, data));
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("{id}")
     public ResponseEntity<String> delete (@PathVariable UUID id) {
-        try {
-            doctorService.delete(id);
-            return ResponseEntity.ok("Doctor deleted successfully");
-        } catch (Exception ex) {
-            return ResponseEntity.notFound().build();
-        }
+        doctorService.delete(id);
+        return ResponseEntity.ok("Doctor deleted successfully");
     }
 }

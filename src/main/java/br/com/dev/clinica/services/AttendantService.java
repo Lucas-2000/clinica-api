@@ -111,7 +111,7 @@ public class AttendantService {
         );
     }
 
-    private UserResponseDTO findUserInfo(UUID userId) throws Exception {
+    private UserResponseDTO findUserInfo(UUID userId) throws RuntimeException {
         Optional<User> user = userRepository.findById(userId);
 
         if (!user.isPresent()) throw new NotFoundException("User not found");
@@ -122,7 +122,7 @@ public class AttendantService {
     }
 
 
-    public AttendantResponseDTO findById(UUID id) throws Exception {
+    public AttendantResponseDTO findById(UUID id) throws RuntimeException {
         Optional<Attendant> attendant = attendantRepository.findById(id);
 
         if(!attendant.isPresent()) throw new NotFoundException("Attendant not found");
@@ -148,7 +148,7 @@ public class AttendantService {
         return attendantResponseDTO;
     }
 
-    public AttendantRequestDTO update(UUID id, AttendantRequestDTO data) throws Exception {
+    public AttendantRequestDTO update(UUID id, AttendantRequestDTO data) throws RuntimeException {
         Optional<Attendant> attendant = attendantRepository.findById(id);
 
         if(!attendant.isPresent()) throw new NotFoundException("Attendant not found");
@@ -172,7 +172,7 @@ public class AttendantService {
         return data;
     }
 
-    public void delete(UUID id) throws Exception {
+    public void delete(UUID id) throws RuntimeException {
         Optional<Attendant> attendant = attendantRepository.findById(id);
 
         if(!attendant.isPresent()) throw new NotFoundException("Attendant not found");

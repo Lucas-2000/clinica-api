@@ -19,12 +19,8 @@ public class AttendantController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<AttendantRequestDTO> create (@RequestBody AttendantRequestDTO data) {
-        try {
-            attendantService.create(data);
-            return ResponseEntity.ok(data);
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().build();
-        }
+        attendantService.create(data);
+        return ResponseEntity.ok(data);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -36,31 +32,19 @@ public class AttendantController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("{id}")
     public ResponseEntity<AttendantResponseDTO> findById(@PathVariable UUID id) {
-        try {
-            return ResponseEntity.ok(attendantService.findById(id));
-        } catch (Exception ex) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(attendantService.findById(id));
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("{id}")
     public ResponseEntity<AttendantRequestDTO> update(@PathVariable UUID id, @RequestBody AttendantRequestDTO data) {
-        try {
-            return ResponseEntity.ok(attendantService.update(id, data));
-        } catch (Exception ex) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(attendantService.update(id, data));
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
-        try {
-            attendantService.delete(id);
-            return ResponseEntity.ok("Attendant deleted successfully");
-        } catch (Exception ex) {
-            return ResponseEntity.notFound().build();
-        }
+        attendantService.delete(id);
+        return ResponseEntity.ok("Attendant deleted successfully");
     }
 }

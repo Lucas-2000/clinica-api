@@ -1,6 +1,7 @@
 package br.com.dev.clinica.domain.attendant;
 
 import br.com.dev.clinica.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class Attendant {
     private String lastName;
 
     @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT")
     private Date birthdate;
 
     @Column(nullable = false, length = 100)

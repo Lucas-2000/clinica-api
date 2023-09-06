@@ -33,7 +33,7 @@ public class AppointmentService {
     PatientRepository patientRepository;
 
     @Transactional
-    public AppointmentResponseDTO create(AppointmentRequestDTO data) throws Exception {
+    public AppointmentResponseDTO create(AppointmentRequestDTO data) throws RuntimeException {
         Appointment appointment = new Appointment(data);
 
         Optional<Patient> patient = patientRepository.findById(data.patient().getId());
@@ -44,7 +44,11 @@ public class AppointmentService {
 
         if(!doctor.isPresent()) throw new NotFoundException("Doctor not found");
 
-        if(appointment.getAppointmentInitialDatetime().compareTo(appointment.getAppointmentFinishDatetime()) > 0) {
+       if(
+               (appointment.getAppointmentInitialDatetime().compareTo(appointment.getAppointmentFinishDatetime()) > 0)
+               && appointment.getAppointmentInitialDatetime() != null
+               && appointment.getAppointmentFinishDatetime() != null
+       ) {
             throw new OverlappingDateException("Appointment initial datetime cannot overlapping appointment finish datetime");
         }
 
@@ -79,7 +83,7 @@ public class AppointmentService {
         );
     }
 
-    public AppointmentResponseDTO findById(UUID id) throws Exception {
+    public AppointmentResponseDTO findById(UUID id) throws RuntimeException {
         Optional<Appointment> appointment = appointmentRepository.findById(id);
 
         if(!appointment.isPresent()) throw new NotFoundException("Appointment not found");
@@ -88,7 +92,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    public AppointmentResponseDTO update(UUID id, AppointmentRequestDTO data) throws Exception {
+    public AppointmentResponseDTO update(UUID id, AppointmentRequestDTO data) throws RuntimeException {
         Optional<Appointment> appointment = appointmentRepository.findById(id);
 
         if(!appointment.isPresent()) throw new NotFoundException("Appointment not found");
@@ -124,7 +128,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    public void delete(UUID id) throws Exception {
+    public void delete(UUID id) throws RuntimeException {
         Optional<Appointment> appointment = appointmentRepository.findById(id);
 
         if(!appointment.isPresent()) throw new NotFoundException("Appointment not found");

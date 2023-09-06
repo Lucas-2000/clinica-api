@@ -23,16 +23,20 @@ public class UserController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<UserRequestDTO> create(@RequestBody UserRequestDTO data) {
-        User user = new User(data);
+        try {
+            User user = new User(data);
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        String password = passwordEncoder.encode(data.password());
+            String password = passwordEncoder.encode(data.password());
 
-        user.setPassword(password);
+            user.setPassword(password);
 
-        userRepository.save(user);
-        return new ResponseEntity<>(data, HttpStatus.CREATED);
+            userRepository.save(user);
+            return new ResponseEntity<>(data, HttpStatus.CREATED);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")

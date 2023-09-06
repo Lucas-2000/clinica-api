@@ -20,12 +20,8 @@ public class AppointmentController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<AppointmentResponseDTO> create(@RequestBody AppointmentRequestDTO data) {
-        try {
-            AppointmentResponseDTO appointment = appointmentService.create(data);
-            return ResponseEntity.ok(appointment);
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().build();
-        }
+        AppointmentResponseDTO appointment = appointmentService.create(data);
+        return ResponseEntity.ok(appointment);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -37,31 +33,19 @@ public class AppointmentController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("{id}")
     public ResponseEntity<AppointmentResponseDTO> findById(@PathVariable UUID id) {
-        try {
-            return ResponseEntity.ok(appointmentService.findById(id));
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(appointmentService.findById(id));
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("{id}")
     public ResponseEntity<AppointmentResponseDTO> update(@PathVariable UUID id, @RequestBody AppointmentRequestDTO data) {
-        try {
-            return ResponseEntity.ok(appointmentService.update(id, data));
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(appointmentService.update(id, data));
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("{id}")
     public ResponseEntity<String> update(@PathVariable UUID id) {
-        try {
-            appointmentService.delete(id);
-            return ResponseEntity.ok("Appointment deleted successfully");
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().build();
-        }
+        appointmentService.delete(id);
+        return ResponseEntity.ok("Appointment deleted successfully");
     }
 }

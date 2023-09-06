@@ -6,6 +6,7 @@ import br.com.dev.clinica.domain.patient.PatientResponseDTO;
 import br.com.dev.clinica.domain.user.UserResponseDTO;
 import br.com.dev.clinica.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +24,16 @@ public class PatientController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<PatientRequestDTO> create(@RequestBody PatientRequestDTO data) {
-        Patient patient = new Patient(data);
+        try {
+            Patient patient = new Patient(data);
 
-        patient.setHealthInsurance(data.healthInsurance().toLowerCase());
+            patient.setHealthInsurance(data.healthInsurance().toLowerCase());
 
-        patientRepository.save(patient);
-        return ResponseEntity.ok(data);
+            patientRepository.save(patient);
+            return ResponseEntity.ok(data);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
