@@ -107,6 +107,8 @@ public class DoctorService {
                 doctor.getUf(),
                 doctor.getCellphone(),
                 doctor.getEmail(),
+                doctor.getWorkDays(),
+                doctor.getWorkHours(),
                 doctor.getSpecialties(),
                 doctor.isActive(),
                 userResponseDTO
@@ -141,6 +143,8 @@ public class DoctorService {
                 doctor.get().getUf(),
                 doctor.get().getCellphone(),
                 doctor.get().getEmail(),
+                doctor.get().getWorkDays(),
+                doctor.get().getWorkHours(),
                 doctor.get().getSpecialties(),
                 doctor.get().isActive(),
                 userResponseDTO
@@ -167,6 +171,8 @@ public class DoctorService {
         existingDoctor.setUf(data.uf());
         existingDoctor.setCellphone(data.cellphone());
         existingDoctor.setEmail(data.email());
+        existingDoctor.setWorkDays(data.workDays());
+        existingDoctor.setWorkHours(data.workHours());
         existingDoctor.setSpecialties(data.specialties());
         existingDoctor.setActive(data.isActive());
 

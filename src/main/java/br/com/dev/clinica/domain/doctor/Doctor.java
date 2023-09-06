@@ -58,6 +58,12 @@ public class Doctor {
     private String email;
 
     @Column(nullable = false)
+    private String[] workDays;
+
+    @Column(nullable = false)
+    private String[] workHours;
+
+    @Column(nullable = false)
     private String[] specialties;
 
     @Column(nullable = false)

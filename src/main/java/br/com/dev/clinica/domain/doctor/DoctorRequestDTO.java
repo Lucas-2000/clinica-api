@@ -14,6 +14,8 @@ public record DoctorRequestDTO(
         String uf,
         String cellphone,
         String email,
+        String[] workDays,
+        String[] workHours,
         String[] specialties,
         Boolean isActive
 ) {

@@ -19,6 +19,8 @@ public record DoctorResponseDTO(
         String uf,
         String cellphone,
         String email,
+        String[] workDays,
+        String[] workHours,
         String[] specialties,
         Boolean isActive,
         UserResponseDTO user
@@ -37,6 +39,8 @@ public record DoctorResponseDTO(
                 doctor.getUf(),
                 doctor.getCellphone(),
                 doctor.getEmail(),
+                doctor.getWorkDays(),
+                doctor.getWorkHours(),
                 doctor.getSpecialties(),
                 doctor.isActive(),
                 new UserResponseDTO(
