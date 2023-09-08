@@ -44,12 +44,10 @@ public class AppointmentService {
 
         if(!doctor.isPresent()) throw new NotFoundException("Doctor not found");
 
-       if(
-               (appointment.getAppointmentInitialDatetime().compareTo(appointment.getAppointmentFinishDatetime()) > 0)
-               && appointment.getAppointmentInitialDatetime() != null
-               && appointment.getAppointmentFinishDatetime() != null
-       ) {
-            throw new OverlappingDateException("Appointment initial datetime cannot overlapping appointment finish datetime");
+        if(appointment.getAppointmentInitialDatetime() != null && appointment.getAppointmentFinishDatetime() != null) {
+            if ((appointment.getAppointmentInitialDatetime().compareTo(appointment.getAppointmentFinishDatetime()) > 0)) {
+                throw new OverlappingDateException("Appointment initial datetime cannot overlapping appointment finish datetime");
+            }
         }
 
         appointment.setPatient(patient.get());
