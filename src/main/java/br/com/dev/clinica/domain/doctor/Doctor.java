@@ -88,6 +88,8 @@ public class Doctor {
         this.uf = data.uf();
         this.cellphone = data.cellphone();
         this.email = data.email();
+        this.workDays = data.workDays();
+        this.workHours = data.workHours();
         this.specialties = data.specialties();
         this.isActive = data.isActive();
     }
