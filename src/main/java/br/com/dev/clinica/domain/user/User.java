@@ -5,6 +5,7 @@ import br.com.dev.clinica.domain.doctor.Doctor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Entity(name = "users")
 @Table(name = "users")
 public class User implements UserDetails {
@@ -56,7 +58,13 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_ATTENDANT"), new SimpleGrantedAuthority("ROLE_DOCTOR"));
-        else return List.of( new SimpleGrantedAuthority("ROLE_ATTENDANT"), new SimpleGrantedAuthority("ROLE_DOCTOR"));
+        else if(this.role == UserRole.DOCTOR) return List.of( new SimpleGrantedAuthority("ROLE_DOCTOR"));
+        else return List.of( new SimpleGrantedAuthority("ROLE_ATTENDANT"));
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     @Override

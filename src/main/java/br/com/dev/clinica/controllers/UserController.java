@@ -1,12 +1,13 @@
 package br.com.dev.clinica.controllers;
 
-import br.com.dev.clinica.domain.user.User;
-import br.com.dev.clinica.domain.user.UserRequestDTO;
-import br.com.dev.clinica.domain.user.UserResponseDTO;
+import br.com.dev.clinica.domain.user.*;
+import br.com.dev.clinica.infra.security.TokenService;
 import br.com.dev.clinica.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,12 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
@@ -93,5 +100,16 @@ public class UserController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody LoginRequestDTO data) {
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
+
+        var auth = this.authenticationManager.authenticate(usernamePassword);
+
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 }
